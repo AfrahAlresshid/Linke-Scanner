@@ -1,0 +1,4 @@
+{
+    "timeout": 15,
+    "playwright_browsers_path": "./browsers"
+}

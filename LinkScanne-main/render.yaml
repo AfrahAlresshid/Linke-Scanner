@@ -1,0 +1,27 @@
+# Render Blueprint — https://render.com/docs/blueprint-spec
+# بعد الربط: اضبط SECRET_KEY و VIRUSTOTAL_API_KEY من لوحة Render (Environment) ولا ترفعها مع المشروع.
+
+version: 1
+
+services:
+  - type: web
+    name: linkscanne
+    runtime: python
+    region: frankfurt
+    plan: free
+    # استخدم السكربت ولا تكرر --with-deps في لوحة Render (يُلغي Blueprint ويُعيد المشكلة)
+    buildCommand: bash build-render.sh
+    startCommand: gunicorn app:app --bind 0.0.0.0:$PORT --workers 1 --threads 2 --timeout 180
+    healthCheckPath: /api/health
+    envVars:
+      - key: PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS
+        value: "1"
+      - key: PYTHON_VERSION
+        value: "3.11.11"
+      - key: SECRET_KEY
+        generateValue: true
+      - key: VIRUSTOTAL_API_KEY
+        sync: false
+      # اختياري: نطاقات إضافية لـ CORS إذا استضافت الواجهة على دومين آخر (مفصول بفواصل)
+      - key: CORS_ORIGINS
+        value: ""

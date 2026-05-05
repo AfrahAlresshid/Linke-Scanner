@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-translate="page.title.result">نتائج التحليل - LinkScanne</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/result-enhancements.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <h1>LinkScanne</h1>
+                <i class="fa fa-shield-alt"></i>
+            </div>
+            <nav class="header-nav">
+                <ul class="nav-links">
+                    <li><a href="index.html"><i class="fa fa-home"></i> <span data-translate="nav.home">الرئيسية</span></a></li>
+                    <li><a href="about.html"><i class="fa fa-info-circle"></i> <span data-translate="nav.about">عن المشروع</span></a></li>
+                    <li><a href="login.html"><i class="fa fa-key"></i> <span data-translate="nav.login">تسجيل الدخول</span></a></li>
+                    <li><a href="register.html" class="btn-register"><i class="fa fa-user-plus"></i> <span data-translate="nav.register">إنشاء حساب</span></a></li>
+                </ul>
+            </nav>
+            <div class="header-left">
+                <button id="language-toggle" class="language-btn" onclick="toggleLanguage()">
+                    <i class="fa fa-language"></i>
+                    <span id="language-text">English</span>
+                </button>
+                <div class="icon-badge">
+                    <i class="fa fa-link"></i>
+                    <span>0</span>
+                </div>
+                <div class="icon-badge">
+                    <i class="fa fa-exclamation-triangle"></i>
+                    <span>0</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <main class="main-content">
+            <div class="results-page">
+                <div class="results-header-section">
+                    <h2><i class="fa fa-file-alt"></i> <span data-translate="results.title">نتائج التحليل</span></h2>
+                    <div class="results-actions">
+                        <button id="speak-results-btn" class="btn btn-primary btn-icon">
+                            <i class="fa fa-volume-up"></i> <span data-translate="results.speak">قراءة النتائج صوتياً</span>
+                        </button>
+                        <button id="stop-speak-btn" class="btn btn-secondary btn-icon">
+                            <i class="fa fa-stop"></i> <span data-translate="results.stop">إيقاف القراءة</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div id="loading-msg" class="loading-message">
+                    <div class="loading-spinner"></div>
+                    <p data-translate="results.loading">جاري تحميل النتائج...</p>
+                </div>
+                
+                <div id="result-content" style="display: none;">
+                    <!-- معلومات الرابط المحلل -->
+                    <div class="url-info-card">
+                        <div class="url-info-header">
+                            <i class="fa fa-link"></i>
+                            <span data-translate="main.history.url">الرابط</span>
+                        </div>
+                        <div class="url-info-content">
+                            <a href="#" id="analyzed-url" target="_blank" class="analyzed-url-link"></a>
+                            <button class="copy-url-btn" onclick="copyUrl()" data-translate-title="results.copy_url" title="نسخ الرابط">
+                                <i class="fa fa-copy"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- بطاقات الملخص -->
+                    <div class="summary-cards">
+                        <div class="summary-card card-primary">
+                            <div class="card-icon">
+                                <i class="fa fa-shield-alt"></i>
+                            </div>
+                            <div class="card-content">
+                                <h4 data-translate="results.final.classification">التصنيف النهائي</h4>
+                                <div class="value" id="final-classification"></div>
+                            </div>
+                        </div>
+                        <div class="summary-card card-score">
+                            <div class="card-icon">
+                                <i class="fa fa-chart-line"></i>
+                            </div>
+                            <div class="card-content">
+                                <h4 data-translate="results.final.score">النتيجة النهائية</h4>
+                                <div class="value" id="final-score"></div>
+                            </div>
+                        </div>
+                        <div class="summary-card card-ml">
+                            <div class="card-icon">
+                                <i class="fa fa-brain"></i>
+                            </div>
+                            <div class="card-content">
+                                <h4 data-translate="results.ml.status">التحليل الآلي</h4>
+                                <div class="value" id="ml-status"></div>
+                            </div>
+                        </div>
+                        <div class="summary-card card-dynamic">
+                            <div class="card-icon">
+                                <i class="fa fa-play-circle"></i>
+                            </div>
+                            <div class="card-content">
+                                <h4 data-translate="results.dynamic.score">التحليل الديناميكي</h4>
+                                <div class="value" id="dynamic-score"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="analysis-panel">
+                        <div class="panel-header" onclick="togglePanel(this)">
+                            <div class="panel-title">
+                                <i class="fa fa-brain"></i>
+                                <h3><span data-translate="results.ml.title">تحليل التعلم الآلي</span></h3>
+                            </div>
+                            <i class="fa fa-chevron-down toggle-icon"></i>
+                        </div>
+                        <div class="panel-content active" id="ml-panel">
+                            <div class="panel-grid">
+                                <div class="info-item">
+                                    <div class="info-label">
+                                        <i class="fa fa-tag"></i>
+                                        <span data-translate="results.ml.classification">التصنيف</span>
+                                    </div>
+                                    <div class="info-value" id="ml-classification"></div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">
+                                        <i class="fa fa-check-circle"></i>
+                                        <span data-translate="results.ml.confidence">الثقة</span>
+                                    </div>
+                                    <div class="info-value confidence-value" id="ml-confidence"></div>
+                                </div>
+                            </div>
+                            <div class="probabilities-section">
+                                <h5><i class="fa fa-percentage"></i> <span data-translate="results.ml.probabilities">الاحتمالات</span></h5>
+                                <div class="probabilities-grid">
+                                    <div class="probability-card prob-safe">
+                                        <div class="prob-label">
+                                            <i class="fa fa-check-circle"></i>
+                                            <span data-translate="results.ml.safe">آمن</span>
+                                        </div>
+                                        <div class="prob-value" id="ml-safe-prob"></div>
+                                    </div>
+                                    <div class="probability-card prob-suspicious">
+                                        <div class="prob-label">
+                                            <i class="fa fa-exclamation-triangle"></i>
+                                            <span data-translate="results.ml.suspicious">مشبوه</span>
+                                        </div>
+                                        <div class="prob-value" id="ml-suspicious-prob"></div>
+                                    </div>
+                                    <div class="probability-card prob-malicious">
+                                        <div class="prob-label">
+                                            <i class="fa fa-times-circle"></i>
+                                            <span data-translate="results.ml.malicious">خبيث</span>
+                                        </div>
+                                        <div class="prob-value" id="ml-malicious-prob"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="analysis-panel">
+                        <div class="panel-header" onclick="togglePanel(this)">
+                            <div class="panel-title">
+                                <i class="fa fa-play-circle"></i>
+                                <h3><span data-translate="results.dynamic.title">التحليل الديناميكي</span></h3>
+                            </div>
+                            <i class="fa fa-chevron-down toggle-icon"></i>
+                        </div>
+                        <div class="panel-content active" id="dynamic-panel">
+                            <div class="info-note">
+                                <i class="fa fa-info-circle"></i>
+                                <span data-translate="results.sandbox.note"><strong>ملاحظة:</strong> التحليل الديناميكي في هذا المشروع (مشروع التخرج) يعتمد على محاكاة Sandbox وليس تنفيذ فعلي للكود</span>
+                            </div>
+                            <div class="panel-grid">
+                                <div class="info-item">
+                                    <div class="info-label">
+                                        <i class="fa fa-chart-bar"></i>
+                                        <span data-translate="results.dynamic.result">النتيجة</span>
+                                    </div>
+                                    <div class="info-value" id="dynamic-result"></div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">
+                                        <i class="fa fa-exclamation-triangle"></i>
+                                        <span data-translate="results.dynamic.suspicious">المؤشرات المشبوهة</span>
+                                    </div>
+                                    <div class="info-value suspicious-count" id="dynamic-suspicious"></div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">
+                                        <i class="fa fa-list"></i>
+                                        <span data-translate="results.dynamic.total">إجمالي المؤشرات</span>
+                                    </div>
+                                    <div class="info-value" id="dynamic-total"></div>
+                                </div>
+                            </div>
+                            <div class="events-section">
+                                <h5><i class="fa fa-history"></i> <span data-translate="results.dynamic.events">الأحداث المكتشفة</span></h5>
+                                <div class="events-grid">
+                                    <div class="event-item">
+                                        <i class="fa fa-download"></i>
+                                        <div class="event-content">
+                                            <span class="event-label" data-translate="results.dynamic.downloads">التحميلات</span>
+                                            <span class="event-value" id="dynamic-downloads">0</span>
+                                        </div>
+                                    </div>
+                                    <div class="event-item">
+                                        <i class="fa fa-file-alt"></i>
+                                        <div class="event-content">
+                                            <span class="event-label" data-translate="results.dynamic.forms">النماذج</span>
+                                            <span class="event-value" id="dynamic-forms">0</span>
+                                        </div>
+                                    </div>
+                                    <div class="event-item">
+                                        <i class="fa fa-redo"></i>
+                                        <div class="event-content">
+                                            <span class="event-label" data-translate="results.dynamic.redirects">إعادة التوجيه</span>
+                                            <span class="event-value" id="dynamic-redirects">0</span>
+                                        </div>
+                                    </div>
+                                    <div class="event-item">
+                                        <i class="fa fa-code"></i>
+                                        <div class="event-content">
+                                            <span class="event-label" data-translate="results.dynamic.js">JavaScript مشبوه</span>
+                                            <span class="event-value" id="dynamic-js">0</span>
+                                        </div>
+                                    </div>
+                                    <div class="event-item">
+                                        <i class="fa fa-cookie"></i>
+                                        <div class="event-content">
+                                            <span class="event-label" data-translate="results.dynamic.cookies">الكوكيز</span>
+                                            <span class="event-value" id="dynamic-cookies">0</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="analysis-panel">
+                        <div class="panel-header" onclick="togglePanel(this)">
+                            <div class="panel-title">
+                                <i class="fa fa-shield-alt"></i>
+                                <h3><span data-translate="results.vt.title">تحليل VirusTotal</span></h3>
+                            </div>
+                            <i class="fa fa-chevron-down toggle-icon"></i>
+                        </div>
+                        <div class="panel-content active" id="vt-panel">
+                            <div class="panel-grid">
+                                <div class="info-item">
+                                    <div class="info-label">
+                                        <i class="fa fa-chart-line"></i>
+                                        <span data-translate="results.vt.result">النتيجة</span>
+                                    </div>
+                                    <div class="info-value" id="vt-result"></div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">
+                                        <i class="fa fa-bug"></i>
+                                        <span data-translate="results.vt.malicious">المحركات الخبيثة</span>
+                                    </div>
+                                    <div class="info-value malicious-count" id="vt-malicious"></div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">
+                                        <i class="fa fa-info-circle"></i>
+                                        <span data-translate="results.vt.status">الحالة</span>
+                                    </div>
+                                    <div class="info-value" id="vt-status"></div>
+                                </div>
+                                <div class="info-item full-width">
+                                    <div class="info-label">
+                                        <i class="fa fa-comment"></i>
+                                        <span data-translate="results.vt.message">الرسالة</span>
+                                    </div>
+                                    <div class="info-value" id="vt-message"></div>
+                                </div>
+                            </div>
+                            <div class="vt-report-link-container">
+                                <a href="#" id="vt-report-link" target="_blank" class="btn btn-outline">
+                                    <i class="fa fa-external-link-alt"></i>
+                                    <span data-translate="results.vt.report">عرض التقرير الكامل</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="analysis-panel">
+                        <div class="panel-header" onclick="togglePanel(this)">
+                            <div class="panel-title">
+                                <i class="fa fa-cog"></i>
+                                <h3><span data-translate="results.heuristic.title">التحليل الاستدلالي</span></h3>
+                            </div>
+                            <i class="fa fa-chevron-down toggle-icon"></i>
+                        </div>
+                        <div class="panel-content active" id="heuristic-panel">
+                            <div class="panel-grid">
+                                <div class="info-item">
+                                    <div class="info-label">
+                                        <i class="fa fa-chart-pie"></i>
+                                        <span data-translate="results.heuristic.result">النتيجة</span>
+                                    </div>
+                                    <div class="info-value" id="heuristic-result"></div>
+                                </div>
+                            </div>
+                            <div class="heuristic-desc">
+                                <i class="fa fa-info-circle"></i>
+                                <p data-translate="results.heuristic.desc">يتم تحليل الرابط بناءً على الأنماط المشبوهة المعروفة</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="analysis-panel">
+                        <div class="panel-header" onclick="togglePanel(this)">
+                            <div class="panel-title">
+                                <i class="fa fa-balance-scale"></i>
+                                <h3><span data-translate="results.weights.title">الأوزان المستخدمة</span></h3>
+                            </div>
+                            <i class="fa fa-chevron-down toggle-icon"></i>
+                        </div>
+                        <div class="panel-content active" id="weights-panel">
+                            <div class="weights-grid">
+                                <div class="weight-item">
+                                    <div class="weight-icon">
+                                        <i class="fa fa-brain"></i>
+                                    </div>
+                                    <div class="weight-content">
+                                        <span class="weight-label" data-translate="results.weights.ml">التعلم الآلي</span>
+                                        <span class="weight-value" id="weight-ml"></span>
+                                    </div>
+                                </div>
+                                <div class="weight-item">
+                                    <div class="weight-icon">
+                                        <i class="fa fa-play-circle"></i>
+                                    </div>
+                                    <div class="weight-content">
+                                        <span class="weight-label" data-translate="results.weights.dynamic">التحليل الديناميكي</span>
+                                        <span class="weight-value" id="weight-dynamic"></span>
+                                    </div>
+                                </div>
+                                <div class="weight-item">
+                                    <div class="weight-icon">
+                                        <i class="fa fa-shield-alt"></i>
+                                    </div>
+                                    <div class="weight-content">
+                                        <span class="weight-label" data-translate="results.weights.vt">VirusTotal</span>
+                                        <span class="weight-value" id="weight-vt"></span>
+                                    </div>
+                                </div>
+                                <div class="weight-item">
+                                    <div class="weight-icon">
+                                        <i class="fa fa-cog"></i>
+                                    </div>
+                                    <div class="weight-content">
+                                        <span class="weight-label" data-translate="results.weights.heuristic">الاستدلالي</span>
+                                        <span class="weight-value" id="weight-heuristic"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="error-msg" style="display: none; padding: 2rem; color: var(--danger-red); text-align: center;"></div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p data-translate="footer.text">&copy; 2025 LinkScanne - نظام تحليل الروابط الذكي</p>
+        </footer>
+    </div>
+    <script src="js/config.js"></script>
+    <script src="js/notify.js"></script>
+    <script>
+    // تطبيق الاتجاه فوراً حسب اللغة المحفوظة
+    (function() {
+        var savedLang = localStorage.getItem('linkScanne_language');
+        // إذا لم تكن هناك لغة محفوظة، استخدم العربية كافتراضية
+        if (!savedLang || (savedLang !== 'ar' && savedLang !== 'en')) {
+            savedLang = 'ar';
+            localStorage.setItem('linkScanne_language', 'ar');
+        }
+        // تطبيق الاتجاه حسب اللغة
+        var dir = savedLang === 'ar' ? 'rtl' : 'ltr';
+        document.documentElement.setAttribute('dir', dir);
+        document.documentElement.setAttribute('lang', savedLang);
+        if (document.body) {
+            document.body.setAttribute('dir', dir);
+            document.body.setAttribute('lang', savedLang);
+        }
+        // تطبيق CSS للاتجاه أيضاً
+        document.documentElement.style.direction = dir;
+        if (document.body) {
+            document.body.style.direction = dir;
+        }
+    })();
+    </script>
+    <script src="js/translations.js"></script>
+    <script src="js/accessibility.js"></script>
+    <script>
+    function toggleLanguage() {
+        var current = 'ar';
+        if (typeof currentLang !== 'undefined') {
+            if (typeof currentLang === 'function') {
+                current = currentLang() || 'ar';
+            } else {
+                current = currentLang || 'ar';
+            }
+        }
+        var newLang = current === 'ar' ? 'en' : 'ar';
+        
+        // تغيير اللغة
+        setLanguage(newLang);
+        
+        // تحديث زر اللغة فوراً
+        updateLanguageButton();
+        
+        // إعادة تطبيق الترجمة بشكل كامل
+        setTimeout(function() {
+            if (typeof applyLanguage === 'function') {
+                applyLanguage();
+            }
+            updateLanguageButton();
+            
+            // إعادة تطبيق الترجمة على النتائج المعروضة
+            var params = new URLSearchParams(window.location.search);
+            var id = params.get('id');
+            if (id && !id.startsWith('temp_')) {
+                // إعادة تحميل البيانات من API وتطبيق الترجمة
+                var API = (typeof API_BASE !== 'undefined') ? API_BASE : 'http://127.0.0.1:5000';
+                fetch(API + '/api/analysis/' + id)
+                    .then(function(r) { return r.json(); })
+                    .then(function(data) {
+                        if (data && !data.error && typeof processResultData === 'function') {
+                            processResultData(data);
+                        }
+                    })
+                    .catch(function() {
+                        // تجاهل الأخطاء
+                    });
+            }
+        }, 50);
+    }
+    
+    function updateLanguageButton() {
+        var btn = document.getElementById('language-text');
+        if (btn) {
+            btn.textContent = translate('nav.language');
+        }
+    }
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        // تطبيق الترجمة عند تحميل الصفحة
+        setTimeout(function() {
+            if (typeof applyLanguage === 'function') {
+                applyLanguage();
+            }
+            updateLanguageButton();
+        }, 100);
+    });
+    
+    // تطبيق الترجمة فوراً إذا كانت الصفحة محملة بالفعل
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+        setTimeout(function() {
+            if (typeof applyLanguage === 'function') {
+                applyLanguage();
+            }
+            updateLanguageButton();
+        }, 50);
+    }
+    </script>
+    <script>
+    function togglePanel(header) {
+        var panel = header.nextElementSibling;
+        var icon = header.querySelector('.toggle-icon');
+        var isActive = panel.classList.contains('active');
+        if (isActive) {
+            panel.classList.remove('active');
+            header.classList.remove('active');
+            if (icon) {
+                icon.classList.remove('fa-chevron-up');
+                icon.classList.add('fa-chevron-down');
+            }
+        } else {
+            panel.classList.add('active');
+            header.classList.add('active');
+            if (icon) {
+                icon.classList.remove('fa-chevron-down');
+                icon.classList.add('fa-chevron-up');
+            }
+        }
+    }
+    
+    function copyUrl() {
+        var urlElement = document.getElementById('analyzed-url');
+        if (urlElement && urlElement.href) {
+            navigator.clipboard.writeText(urlElement.href).then(function() {
+                var btn = event.target.closest('.copy-url-btn');
+                if (btn) {
+                    var originalHTML = btn.innerHTML;
+                    btn.innerHTML = '<i class="fa fa-check"></i>';
+                    btn.style.color = 'var(--success-green)';
+                    setTimeout(function() {
+                        btn.innerHTML = originalHTML;
+                        btn.style.color = '';
+                    }, 2000);
+                }
+            }).catch(function() {
+                if (typeof LinkNotify !== 'undefined') {
+                    LinkNotify.show('فشل في نسخ الرابط', 'error', 4200);
+                }
+            });
+        }
+    }
+
+    function getLabel(label) {
+        if (typeof translate !== 'undefined') {
+            if (label === 'safe') return translate('label.safe');
+            if (label === 'suspicious') return translate('label.suspicious');
+            if (label === 'malicious') return translate('label.malicious');
+            return translate('label.error');
+        }
+        if (label === 'safe') return 'آمن';
+        if (label === 'suspicious') return 'مشبوه';
+        if (label === 'malicious') return 'خبيث';
+        return label || 'خطأ';
+    }
+
+    (function(){
+        var API = (typeof API_BASE !== 'undefined') ? API_BASE : 'http://127.0.0.1:5000';
+        var params = new URLSearchParams(window.location.search);
+        var id = params.get('id');
+        var loading = document.getElementById('loading-msg');
+        var content = document.getElementById('result-content');
+        var errEl = document.getElementById('error-msg');
+
+        if (!id) {
+            loading.style.display = 'none';
+            errEl.style.display = 'block';
+            errEl.textContent = 'معرف التحليل غير موجود';
+            return;
+        }
+
+        // التحقق من temp ID في sessionStorage
+        var tempData = null;
+        if (id && id.startsWith('temp_')) {
+            var tempKey = 'temp_analysis_' + id;
+            var stored = sessionStorage.getItem(tempKey);
+            if (stored) {
+                try {
+                    tempData = JSON.parse(stored);
+                    sessionStorage.removeItem(tempKey); // حذف بعد الاستخدام
+                } catch(e) {
+                    console.error('Error parsing temp data:', e);
+                }
+            }
+        }
+        
+        if (tempData) {
+            // استخدام البيانات المؤقتة
+            processResultData(tempData);
+        } else {
+            // جلب البيانات من API
+            fetch(API + '/api/analysis/' + id)
+            .then(function(r) { return r.json(); })
+            .then(function(data) {
+                processResultData(data);
+            })
+            .catch(function() {
+                loading.style.display = 'none';
+                errEl.style.display = 'block';
+                var lang = 'ar';
+                if (typeof currentLang !== 'undefined') {
+                    if (typeof currentLang === 'function') {
+                        lang = currentLang() || 'ar';
+                    } else {
+                        lang = currentLang || 'ar';
+                    }
+                }
+                errEl.textContent = lang === 'ar' ? 'فشل في تحميل النتائج' : 'Failed to load results';
+            });
+        }
+        
+        function processResultData(data) {
+            loading.style.display = 'none';
+            if (data.error) {
+                errEl.style.display = 'block';
+                errEl.textContent = data.error;
+                return;
+            }
+            content.style.display = 'block';
+            
+            // عرض الرابط المحلل
+            var urlElement = document.getElementById('analyzed-url');
+            if (urlElement && data.url) {
+                urlElement.textContent = data.url;
+                urlElement.href = data.url;
+            }
+
+            var finalLabel = data.final_label || 'error';
+            var finalScore = ((data.final_score || 0) * 100).toFixed(1);
+            var finalScoreDisplay = finalScore + '%';
+            if (finalScore < 0) finalScoreDisplay = finalScore + '%';
+
+            var finalClass = 'value';
+            if (finalLabel === 'safe') finalClass += ' safe';
+            else if (finalLabel === 'suspicious') finalClass += ' suspicious';
+            else if (finalLabel === 'malicious') finalClass += ' malicious';
+            else finalClass += ' error';
+            
+            document.getElementById('final-classification').textContent = getLabel(finalLabel);
+            document.getElementById('final-classification').className = finalClass;
+            document.getElementById('final-score').textContent = finalScoreDisplay;
+            
+            var lang = 'ar';
+            if (typeof currentLang !== 'undefined') {
+                if (typeof currentLang === 'function') {
+                    lang = currentLang() || 'ar';
+                } else {
+                    lang = currentLang || 'ar';
+                }
+            }
+            var errorText = lang === 'ar' ? 'خطأ' : 'Error';
+            var mlStatus = data.ml_result && data.ml_result.label ? getLabel(data.ml_result.label) : errorText;
+            var mlStatusClass = 'value';
+            if (data.ml_result && data.ml_result.label === 'safe') mlStatusClass += ' safe';
+            else if (data.ml_result && data.ml_result.label === 'suspicious') mlStatusClass += ' suspicious';
+            else if (data.ml_result && data.ml_result.label === 'malicious') mlStatusClass += ' malicious';
+            else mlStatusClass += ' error';
+            
+            document.getElementById('ml-status').textContent = mlStatus;
+            document.getElementById('ml-status').className = mlStatusClass;
+            document.getElementById('dynamic-score').textContent = ((data.dynamic_result && data.dynamic_result.dynamic_score ? data.dynamic_result.dynamic_score : 0) * 100).toFixed(1) + '%';
+
+            if (data.ml_result) {
+                document.getElementById('ml-classification').textContent = getLabel(data.ml_result.label || 'error');
+                document.getElementById('ml-confidence').textContent = ((data.ml_result.confidence || 0) * 100).toFixed(1) + '%';
+                var probs = data.ml_result.probabilities || {};
+                document.getElementById('ml-safe-prob').textContent = ((probs.safe || 0) * 100).toFixed(1) + '%';
+                document.getElementById('ml-suspicious-prob').textContent = ((probs.suspicious || 0) * 100).toFixed(1) + '%';
+                document.getElementById('ml-malicious-prob').textContent = ((probs.malicious || 0) * 100).toFixed(1) + '%';
+            } else {
+                document.getElementById('ml-classification').textContent = errorText;
+                document.getElementById('ml-confidence').textContent = '0.0%';
+                document.getElementById('ml-safe-prob').textContent = '0.0%';
+                document.getElementById('ml-suspicious-prob').textContent = '0.0%';
+                document.getElementById('ml-malicious-prob').textContent = '0.0%';
+            }
+
+            if (data.dynamic_result) {
+                var dynScore = (data.dynamic_result.dynamic_score || 0) * 100;
+                document.getElementById('dynamic-result').textContent = dynScore.toFixed(1) + '%';
+                var events = data.dynamic_result.events || {};
+                document.getElementById('dynamic-suspicious').textContent = data.dynamic_result.suspicious_indicators || 0;
+                document.getElementById('dynamic-total').textContent = data.dynamic_result.total_indicators || 0;
+                document.getElementById('dynamic-downloads').textContent = Array.isArray(events.downloads) ? events.downloads.length : 0;
+                document.getElementById('dynamic-forms').textContent = Array.isArray(events.form_submissions) ? events.form_submissions.length : 0;
+                document.getElementById('dynamic-redirects').textContent = Array.isArray(events.redirects) ? events.redirects.length : 0;
+                document.getElementById('dynamic-js').textContent = Array.isArray(events.suspicious_js) ? events.suspicious_js.length : 0;
+                document.getElementById('dynamic-cookies').textContent = Array.isArray(events.cookies) ? events.cookies.length : 0;
+            } else {
+                document.getElementById('dynamic-result').textContent = '0.0%';
+                document.getElementById('dynamic-suspicious').textContent = '0';
+                document.getElementById('dynamic-total').textContent = '0';
+                document.getElementById('dynamic-downloads').textContent = '0';
+                document.getElementById('dynamic-forms').textContent = '0';
+                document.getElementById('dynamic-redirects').textContent = '0';
+                document.getElementById('dynamic-js').textContent = '0';
+                document.getElementById('dynamic-cookies').textContent = '0';
+            }
+
+            if (data.vt_result) {
+                var vtScore = (data.vt_result.vt_score || 0) * 100;
+                document.getElementById('vt-result').textContent = vtScore.toFixed(1) + '%';
+                var maliciousCount = data.vt_result.malicious_count || 0;
+                var totalEngines = data.vt_result.total_engines || 98;
+                document.getElementById('vt-malicious').textContent = maliciousCount + '/' + totalEngines;
+                var vtStatus = data.vt_result.status || 'clean';
+                var statusText = vtStatus === 'clean' ? (lang === 'ar' ? 'نظيف' : 'clean') : 
+                                vtStatus === 'malicious' ? (lang === 'ar' ? 'خبيث' : 'malicious') : 
+                                vtStatus === 'suspicious' ? (lang === 'ar' ? 'مشبوه' : 'suspicious') : 
+                                (lang === 'ar' ? 'غير معروف' : 'unknown');
+                document.getElementById('vt-status').textContent = statusText;
+                if (vtStatus === 'clean') {
+                    document.getElementById('vt-status').style.color = 'var(--success-green)';
+                } else if (vtStatus === 'malicious' || vtStatus === 'suspicious') {
+                    document.getElementById('vt-status').style.color = 'var(--danger)';
+                } else {
+                    document.getElementById('vt-status').style.color = 'var(--text-muted)';
+                }
+                var safeMsg = lang === 'ar' ? 'الرابط آمن' : 'Link is safe';
+                document.getElementById('vt-message').textContent = data.vt_result.message || safeMsg;
+                if (vtStatus === 'clean') {
+                    document.getElementById('vt-message').style.color = 'var(--success-green)';
+                } else {
+                    document.getElementById('vt-message').style.color = 'var(--text)';
+                }
+                if (data.vt_result.report_url) {
+                    document.getElementById('vt-report-link').href = data.vt_result.report_url;
+                } else if (data.url) {
+                    document.getElementById('vt-report-link').href = 'https://www.virustotal.com/gui/url/' + btoa(data.url).replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
+                }
+            } else {
+                document.getElementById('vt-result').textContent = '0.0%';
+                document.getElementById('vt-malicious').textContent = '0/98';
+                var lang = 'ar';
+                if (typeof currentLang !== 'undefined') {
+                    if (typeof currentLang === 'function') {
+                        lang = currentLang() || 'ar';
+                    } else {
+                        lang = currentLang || 'ar';
+                    }
+                }
+                var cleanText = lang === 'ar' ? 'نظيف' : 'clean';
+                var safeMsg = lang === 'ar' ? 'الرابط آمن' : 'Link is safe';
+                document.getElementById('vt-status').textContent = cleanText;
+                document.getElementById('vt-status').style.color = 'var(--success-green)';
+                document.getElementById('vt-message').textContent = safeMsg;
+                document.getElementById('vt-message').style.color = 'var(--success-green)';
+            }
+
+            if (data.heuristic_score !== undefined) {
+                var heuristicValue = (data.heuristic_score || 0) * 100;
+                document.getElementById('heuristic-result').textContent = heuristicValue.toFixed(1) + '%';
+                if (heuristicValue < 0) {
+                    document.getElementById('heuristic-result').style.color = 'var(--success-green)';
+                } else if (heuristicValue > 50) {
+                    document.getElementById('heuristic-result').style.color = 'var(--danger)';
+                } else {
+                    document.getElementById('heuristic-result').style.color = '#f59e0b';
+                }
+            } else {
+                document.getElementById('heuristic-result').textContent = '0.0%';
+                document.getElementById('heuristic-result').style.color = 'var(--text-muted)';
+            }
+
+            if (data.weights) {
+                document.getElementById('weight-ml').textContent = ((data.weights.ml || 0) * 100).toFixed(0) + '%';
+                document.getElementById('weight-dynamic').textContent = ((data.weights.dynamic || 0) * 100).toFixed(0) + '%';
+                document.getElementById('weight-vt').textContent = ((data.weights.virustotal || 0) * 100).toFixed(0) + '%';
+                document.getElementById('weight-heuristic').textContent = ((data.weights.heuristic || 0) * 100).toFixed(0) + '%';
+            }
+            
+            var speakBtn = document.getElementById('speak-results-btn');
+            var stopBtn = document.getElementById('stop-speak-btn');
+            
+            if (speakBtn) {
+                speakBtn.addEventListener('click', function() {
+                    if (window.A11y && window.A11y.speakDetailedResults) {
+                        window.A11y.speakDetailedResults(data);
+                    }
+                });
+            }
+            
+            if (stopBtn) {
+                stopBtn.addEventListener('click', function() {
+                    if (window.A11y && window.A11y.stop) {
+                        window.A11y.stop();
+                    }
+                });
+            }
+        }
+    })();
+    </script>
+</body>
+</html>

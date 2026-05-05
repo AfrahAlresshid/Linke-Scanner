@@ -1,0 +1,1 @@
+{"model_name": "XGBoost", "feature_names": ["path_depth", "slash_count", "has_https", "url_length", "lower_count", "has_www", "domain_length", "dot_count", "redirect_like", "digit_count"]}

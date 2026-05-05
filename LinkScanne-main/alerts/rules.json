@@ -1,0 +1,18 @@
+{
+    "rules": [
+        {
+            "name": "rapid_malicious_detection",
+            "description": "كشف الروابط الخبيثة السريع",
+            "threshold_count": 5,
+            "window_seconds": 300,
+            "severity": "high"
+        },
+        {
+            "name": "suspicious_pattern",
+            "description": "نمط مشبوه في الروابط",
+            "threshold_count": 10,
+            "window_seconds": 600,
+            "severity": "medium"
+        }
+    ]
+}

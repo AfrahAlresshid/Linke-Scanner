@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-translate="page.title.index">LinkScanne - نظام تحليل الروابط الذكي</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <h1>LinkScanne</h1>
+                <i clpass="fa fa-shield-alt"></i>
+            </div>
+            <nav class="header-nav">
+                <ul class="nav-links">
+                    <li><a href="index.html" class="active"><i class="fa fa-home"></i> <span
+                                data-translate="nav.home">الرئيسية</span></a></li>
+                    <li><a href="about.html"><i class="fa fa-info-circle"></i> <span data-translate="nav.about">عن
+                                المشروع</span></a></li>
+                    <li><a href="login.html"><i class="fa fa-key"></i> <span data-translate="nav.login">تسجيل
+                                الدخول</span></a></li>
+                    <li><a href="register.html" class="btn-register"><i class="fa fa-user-plus"></i> <span
+                                data-translate="nav.register">إنشاء حساب</span></a></li>
+                </ul>
+            </nav>
+            <div class="header-left">
+                <button id="language-toggle" class="language-btn" onclick="toggleLanguage()">
+                    <i class="fa fa-language"></i>
+                    <span id="language-text">English</span>
+                </button>
+                <div class="icon-badge">
+                    <i class="fa fa-link"></i>
+                    <span id="notif-count-header">0</span>
+                </div>
+                <div class="icon-badge">
+                    <i class="fa fa-exclamation-triangle"></i>
+                    <span id="alert-count-header">0</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <main class="main-content">
+            <section class="analysis-section">
+                <div class="analysis-card">
+                    <h2><i class="fa fa-search"></i> <span data-translate="main.analyze">تحليل الرابط</span></h2>
+                    <p
+                        style="color: var(--text-muted); margin-bottom: 1.5rem; font-size: 0.95rem; display: flex; align-items: flex-start; gap: 0.5rem;">
+                        <i class="fa fa-info-circle"
+                            style="font-size: 0.85em; color: var(--warning); margin-top: 0.2rem; flex-shrink: 0;"></i>
+                        <span data-translate="main.analyze.desc">أدخل الرابط المراد تحليله وسيتم فحصه باستخدام تقنيات
+                            متعددة: التعلم الآلي، التحليل الديناميكي (محاكاة Sandbox)، VirusTotal، والتحليل
+                            الاستدلالي</span>
+                    </p>
+                    <form id="analysis-form" class="analysis-form">
+                        <div class="input-group">
+                            <input type="url" id="url-input" data-translate="main.analyze.placeholder"
+                                placeholder="أدخل الرابط المراد تحليله..." required>
+                            <button type="submit" id="analyze-btn"><i class="fa fa-search"></i> <span
+                                    data-translate="main.analyze.button">تحليل</span></button>
+                        </div>
+                        <div class="loading-indicator" id="loading-indicator" style="display:none">
+                            <div class="loading-dots">
+                                <span></span><span></span><span></span><span></span>
+                            </div>
+                            <p data-translate="main.analyze.loading">جاري تحليل الرابط....</p>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <section class="stats-section">
+                <h2><i class="fa fa-chart-bar"></i> <span data-translate="main.stats">الإحصائيات</span></h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value" id="stat-total">0</div>
+                        <div class="stat-label" data-translate="main.stats.total">إجمالي الروابط</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value stat-danger" id="stat-malicious">0</div>
+                        <div class="stat-label" data-translate="main.stats.malicious">روابط خبيثة</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value stat-warning" id="stat-suspicious">0</div>
+                        <div class="stat-label" data-translate="main.stats.suspicious">روابط مشبوهة</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value stat-success" id="stat-safe">0</div>
+                        <div class="stat-label" data-translate="main.stats.safe">روابط آمنة</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="stat-analyses-total" style="color: var(--primary);">0</div>
+                        <div class="stat-label" data-translate="main.stats.analyses.total">إجمالي التحليلات</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="stat-analyses-today" style="color: var(--primary);">0</div>
+                        <div class="stat-label" data-translate="main.stats.analyses.today">تحليلات اليوم</div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="alerts-section">
+                <h2><i class="fa fa-bell"></i> <span data-translate="main.alerts">التنبيهات النشطة</span></h2>
+                <p style="color: var(--text-muted); margin-bottom: 1.5rem; font-size: 0.95rem;">
+                    <span data-translate="main.alerts.desc">تنبيهات فورية عند اكتشاف روابط مشبوهة أو خبيثة</span>
+                </p>
+                <div class="alerts-content" id="alerts-content">
+                    <p class="alerts-empty" data-translate="main.alerts.empty">لا توجد تنبيهات نشطة</p>
+                </div>
+            </section>
+
+            <section class="history-section" style="margin-top: 2rem;">
+                <h2><i class="fa fa-history"></i> <span data-translate="main.history.title">سجل التحليلات</span></h2>
+                <p style="color: var(--text-muted); margin-bottom: 1.5rem; font-size: 0.95rem;">
+                    <span data-translate="main.history.desc">عرض جميع التحليلات السابقة مع التفاصيل الكاملة
+                        والتواريخ</span>
+                </p>
+                <div class="history-content" id="history-content">
+                    <div style="text-align: center; padding: 2rem; color: var(--text-muted);">
+                        <i class="fa fa-spinner fa-spin" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+                        <p data-translate="main.history.loading">جاري تحميل السجلات...</p>
+                    </div>
+                </div>
+            </section>
+
+            <div class="results-overlay" id="results-overlay" style="display:none">
+                <div class="results-modal">
+                    <div class="results-header">
+                        <h2><i class="fa fa-chart-line"></i> <span data-translate="results.title">نتائج التحليل</span>
+                        </h2>
+                        <div style="display: flex; gap: 0.5rem; align-items: center;">
+                            <button id="speak-results-btn-overlay" class="btn btn-primary"
+                                style="padding: 0.5rem 1rem; font-size: 0.9rem;">
+                                <i class="fa fa-volume-up"></i> <span data-translate="results.speak">قراءة صوتياً</span>
+                            </button>
+                            <button id="stop-speak-btn-overlay" class="btn"
+                                style="padding: 0.5rem 1rem; font-size: 0.9rem; background: var(--surface-light);">
+                                <i class="fa fa-stop"></i> <span data-translate="results.stop">إيقاف القراءة</span>
+                            </button>
+                            <button class="close-results" id="close-results"><i class="fa fa-times"></i></button>
+                        </div>
+                    </div>
+                    <div class="results-body">
+                        <div id="result-summary"></div>
+                        <div id="result-details"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="loading-overlay" id="loading-overlay" style="display:none">
+                <div class="spinner-container">
+                    <div class="spinner"></div>
+                    <p data-translate="main.analyze.loading">جاري تحليل الرابط....</p>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p data-translate="footer.text">&copy; 2025 LinkScanne - نظام تحليل الروابط الذكي</p>
+        </footer>
+    </div>
+
+
+    <div class="notification-modal" id="error-modal" style="display:none">
+        <div class="notification-content error">
+            <div class="notification-icon">
+                <i class="fa fa-times-circle"></i>
+            </div>
+            <div class="notification-body">
+                <h3 data-translate="label.error">خطأ</h3>
+                <p id="error-message"></p>
+            </div>
+            <button id="error-close" class="notification-close">
+                <i class="fa fa-times"></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="notification-modal" id="success-modal" style="display:none">
+        <div class="notification-content success">
+            <div class="notification-icon">
+                <i class="fa fa-check-circle"></i>
+            </div>
+            <div class="notification-body">
+                <h3 data-translate="label.success">نجح</h3>
+                <p id="success-message"></p>
+            </div>
+            <button id="success-close" class="notification-close">
+                <i class="fa fa-times"></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="toast-container" id="toast-container"></div>
+
+    <script src="js/config.js"></script>
+    <script>
+        // تطبيق الاتجاه فوراً حسب اللغة المحفوظة
+        (function () {
+            var savedLang = localStorage.getItem('linkScanne_language');
+            // إذا لم تكن هناك لغة محفوظة، استخدم العربية كافتراضية
+            if (!savedLang || (savedLang !== 'ar' && savedLang !== 'en')) {
+                savedLang = 'ar';
+                localStorage.setItem('linkScanne_language', 'ar');
+            }
+            // تطبيق الاتجاه حسب اللغة
+            var dir = savedLang === 'ar' ? 'rtl' : 'ltr';
+            document.documentElement.setAttribute('dir', dir);
+            document.documentElement.setAttribute('lang', savedLang);
+            if (document.body) {
+                document.body.setAttribute('dir', dir);
+                document.body.setAttribute('lang', savedLang);
+            }
+            // تطبيق CSS للاتجاه أيضاً
+            document.documentElement.style.direction = dir;
+            if (document.body) {
+                document.body.style.direction = dir;
+            }
+        })();
+    </script>
+    <script src="js/translations.js"></script>
+    <script src="js/hijri-date.js"></script>
+    <script src="js/accessibility.js"></script>
+    <script src="js/notify.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/history.js"></script>
+    <script>
+        // التحقق من حالة المستخدم وتحديث الواجهة
+        (function () {
+            var justLoggedIn = false;
+            try {
+                justLoggedIn = sessionStorage.getItem('linkScanne_justLoggedIn') === '1';
+                if (justLoggedIn) {
+                    sessionStorage.removeItem('linkScanne_justLoggedIn');
+                }
+            } catch (e0) {}
+
+            var postLoginAuthRetry = justLoggedIn;
+
+            function checkUserStatus() {
+                if (window.checkingUserStatus) {
+                    console.log('checkUserStatus already running, skipping...');
+                    return;
+                }
+                window.checkingUserStatus = true;
+
+                var API = (typeof API_BASE !== 'undefined') ? API_BASE : 'http://127.0.0.1:5000';
+                fetch(API + '/api/auth/me', {
+                    method: 'GET',
+                    credentials: 'include'
+                })
+                    .then(function (response) {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(function (data) {
+                        console.log('User status data:', data);
+                        var storedUser = null;
+                        try {
+                            storedUser = JSON.parse(localStorage.getItem('currentUser') || 'null');
+                        } catch (e1) {}
+                        var user = data.user || null;
+                        var fromServer = !!(data.is_logged_in && user);
+                        if (!fromServer && justLoggedIn && storedUser && (storedUser.email || storedUser.id)) {
+                            user = storedUser;
+                        }
+                        var isLoggedIn = fromServer || (!!user && justLoggedIn);
+                        var isPremium = user && user.is_premium;
+
+                        console.log('Is logged in:', isLoggedIn, 'User:', user);
+
+                        // تحديث القائمة العلوية
+                        var nav = document.querySelector('nav ul');
+                        if (nav) {
+                            if (isLoggedIn) {
+                                // إخفاء روابط تسجيل الدخول والتسجيل
+                                var loginLink = nav.querySelector('a[href="login.html"]');
+                                var registerLink = nav.querySelector('a[href="register.html"]');
+                                if (loginLink && loginLink.parentElement) {
+                                    loginLink.parentElement.style.display = 'none';
+                                }
+                                if (registerLink && registerLink.parentElement) {
+                                    registerLink.parentElement.style.display = 'none';
+                                }
+
+                                var navUser = nav.querySelector('.nav-user-item');
+                                if (!navUser) {
+                                    var profileLabel = (typeof translate === 'function') ? translate('nav.profile') : 'الملف الشخصي';
+                                    var logoutLabel = (typeof translate === 'function') ? translate('nav.logout') : 'تسجيل الخروج';
+                                    var liP = document.createElement('li');
+                                    liP.className = 'nav-user-item';
+                                    liP.innerHTML = '<a href="profile.html"><i class="fa fa-address-card"></i> ' + profileLabel + '</a>';
+                                    var liL = document.createElement('li');
+                                    liL.className = 'nav-user-item';
+                                    liL.innerHTML = '<a href="#" onclick="logout(); return false;" title="' + (user ? user.name : '') + '"><i class="fa fa-user"></i> ' +
+                                        (user ? user.name : '') +
+                                        (isPremium ? ' <span style="color: gold;">★</span>' : '') +
+                                        ' <i class="fa fa-sign-out-alt"></i> ' + logoutLabel + '</a>';
+                                    nav.appendChild(liP);
+                                    nav.appendChild(liL);
+                                }
+                            } else {
+                                // إظهار روابط تسجيل الدخول والتسجيل
+                                var loginLink = nav.querySelector('a[href="login.html"]');
+                                var registerLink = nav.querySelector('a[href="register.html"]');
+                                if (loginLink && loginLink.parentElement) {
+                                    loginLink.parentElement.style.display = '';
+                                }
+                                if (registerLink && registerLink.parentElement) {
+                                    registerLink.parentElement.style.display = '';
+                                }
+
+                                nav.querySelectorAll('.nav-user-item').forEach(function (el) {
+                                    el.remove();
+                                });
+                            }
+                        }
+
+                        // إخفاء/إظهار الأقسام حسب حالة المستخدم
+                        var statsSection = document.querySelector('.stats-section');
+                        var alertsSection = document.querySelector('.alerts-section');
+                        var historySection = document.querySelector('.history-section');
+
+                        console.log('Sections found:', {
+                            stats: !!statsSection,
+                            alerts: !!alertsSection,
+                            history: !!historySection
+                        });
+
+                        if (!isLoggedIn) {
+                            // للمستخدمين غير المسجلين: إخفاء الإحصائيات والتنبيهات والسجل
+                            console.log('Hiding sections for guest user');
+                            if (statsSection) statsSection.style.display = 'none';
+                            if (alertsSection) alertsSection.style.display = 'none';
+                            if (historySection) historySection.style.display = 'none';
+                        } else {
+                            // للمستخدمين المسجلين: إظهار كل شيء
+                            console.log('Showing sections for logged in user');
+                            if (statsSection) {
+                                statsSection.style.display = 'block';
+                                console.log('Stats section displayed');
+                            }
+                            if (alertsSection) {
+                                alertsSection.style.display = 'block';
+                                console.log('Alerts section displayed');
+                            }
+                            if (historySection) {
+                                historySection.style.display = 'block';
+                                console.log('History section displayed');
+                            }
+
+                            // تحميل البيانات للمستخدمين المسجلين - مرة واحدة فقط
+                            // لا نقوم بالتحميل التلقائي المتكرر
+                            if (!window.dataLoaded) {
+                                setTimeout(function () {
+                                    if (typeof window.loadStats === 'function') {
+                                        window.loadStats();
+                                    }
+                                    if (typeof window.loadAlerts === 'function') {
+                                        window.loadAlerts();
+                                    }
+                                    if (typeof window.loadHistory === 'function') {
+                                        window.loadHistory();
+                                    }
+                                    window.dataLoaded = true; // منع التحميل المتكرر
+                                }, 500);
+                            }
+                        }
+                    })
+                    .catch(function (error) {
+                        console.error('Error checking user status:', error);
+                        // في حالة الخطأ، نعامل المستخدم كزائر
+                        var statsSection = document.querySelector('.stats-section');
+                        var alertsSection = document.querySelector('.alerts-section');
+                        var historySection = document.querySelector('.history-section');
+                        if (statsSection) statsSection.style.display = 'none';
+                        if (alertsSection) alertsSection.style.display = 'none';
+                        if (historySection) historySection.style.display = 'none';
+                    })
+                    .finally(function () {
+                        window.checkingUserStatus = false;
+                        if (postLoginAuthRetry) {
+                            postLoginAuthRetry = false;
+                            setTimeout(function () {
+                                checkUserStatus();
+                            }, 450);
+                        }
+                    });
+            }
+
+            checkUserStatus();
+
+            window.checkUserStatus = function (force) {
+                if (force) {
+                    window.dataLoaded = false;
+                }
+                checkUserStatus();
+            };
+
+            window.resetUserStatusCheck = function () {
+                window.dataLoaded = false;
+            };
+
+            // دالة تسجيل الخروج
+            window.logout = function () {
+                if (!confirm('هل أنت متأكد من تسجيل الخروج؟')) {
+                    return;
+                }
+
+                var API = (typeof API_BASE !== 'undefined') ? API_BASE : 'http://127.0.0.1:5000';
+                var lang = 'ar';
+                if (typeof currentLang !== 'undefined') {
+                    if (typeof currentLang === 'function') {
+                        lang = currentLang() || 'ar';
+                    } else {
+                        lang = currentLang || 'ar';
+                    }
+                }
+
+                fetch(API + '/api/auth/logout', {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                    .then(function (response) {
+                        return response.json();
+                    })
+                    .then(function (data) {
+                        if (data.logged_out || data.message) {
+                            // مسح localStorage
+                            localStorage.removeItem('currentUser');
+
+                            var logoutMsg = lang === 'ar' ? 'تم تسجيل الخروج بنجاح' : 'Logged out successfully';
+                            if (typeof LinkNotify !== 'undefined') {
+                                LinkNotify.show(logoutMsg, 'success', 2000);
+                            }
+                            setTimeout(function () {
+                                window.location.href = 'index.html';
+                            }, 900);
+                        } else {
+                            throw new Error(data.error || 'فشل في تسجيل الخروج');
+                        }
+                    })
+                    .catch(function (error) {
+                        console.error('Error logging out:', error);
+                        var lang = 'ar';
+                        if (typeof currentLang !== 'undefined') {
+                            if (typeof currentLang === 'function') {
+                                lang = currentLang() || 'ar';
+                            } else {
+                                lang = currentLang || 'ar';
+                            }
+                        }
+                        var failMsg = lang === 'ar' ? 'حدث خطأ أثناء تسجيل الخروج' : 'Error occurred while logging out';
+                        if (typeof LinkNotify !== 'undefined') {
+                            LinkNotify.show(failMsg, 'error', 4500);
+                        }
+                        window.location.href = 'index.html';
+                    });
+            };
+        })();
+    </script>
+    <script>
+        function toggleLanguage() {
+            var current = 'ar';
+            if (typeof currentLang !== 'undefined') {
+                if (typeof currentLang === 'function') {
+                    current = currentLang() || 'ar';
+                } else {
+                    current = currentLang || 'ar';
+                }
+            }
+            var newLang = current === 'ar' ? 'en' : 'ar';
+
+            // تغيير اللغة - هذا سيحفظها في localStorage ويطبقها
+            if (typeof setLanguage === 'function') {
+                setLanguage(newLang);
+            } else {
+                // Fallback إذا لم تكن الدالة متاحة
+                if (typeof window !== 'undefined' && window.currentLang) {
+                    if (typeof window.currentLang === 'function') {
+                        // لا يمكن تعيين دالة مباشرة
+                    } else {
+                        window.currentLang = newLang;
+                    }
+                }
+                localStorage.setItem('linkScanne_language', newLang);
+                if (typeof applyLanguage === 'function') {
+                    applyLanguage();
+                }
+            }
+
+            // تحديث زر اللغة فوراً
+            updateLanguageButton();
+
+            // إعادة تطبيق الترجمة بشكل كامل
+            setTimeout(function () {
+                if (typeof applyLanguage === 'function') {
+                    applyLanguage();
+                }
+                updateLanguageButton();
+
+                // لا نقوم بتحديث المحتوى الديناميكي تلقائياً - فقط عند الحاجة
+                // if (typeof window.loadHistory === 'function') {
+                //     window.loadHistory();
+                // }
+                // if (typeof window.loadStats === 'function') {
+                //     window.loadStats();
+                // }
+                // if (typeof window.loadAlerts === 'function') {
+                //     window.loadAlerts();
+                // }
+            }, 100);
+        }
+
+        function updateLanguageButton() {
+            var btn = document.getElementById('language-text');
+            if (btn) {
+                btn.textContent = translate('nav.language');
+            }
+        }
+
+        // لا حاجة لاستدعاء applyLanguage هنا - translations.js يتولى ذلك تلقائياً
+        // فقط تحديث زر اللغة إذا كان موجوداً
+        if (!window.languageButtonUpdated) {
+            function updateLanguageButtonOnce() {
+                if (window.languageButtonUpdated) return;
+                window.languageButtonUpdated = true;
+                updateLanguageButton();
+            }
+
+            if (document.readyState === 'complete' || document.readyState === 'interactive') {
+                updateLanguageButtonOnce();
+            } else {
+                document.addEventListener('DOMContentLoaded', updateLanguageButtonOnce);
+            }
+        }
+    </script>
+    <script>
+        (function () {
+            var API = (typeof API_BASE !== 'undefined') ? API_BASE : 'http://127.0.0.1:5000';
+
+            setTimeout(function () {
+                fetch(API + '/api/health', {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json'
+                    },
+                    cache: 'no-cache',
+                    mode: 'cors'
+                })
+                    .then(function (r) {
+                        if (r.status === 404) {
+                            throw new Error('404 - Endpoint not found');
+                        }
+                        if (!r.ok && r.status !== 200) {
+                            throw new Error('HTTP ' + r.status);
+                        }
+                        return r.json().catch(function () {
+                            return { ok: false };
+                        });
+                    })
+                    .then(function (data) {
+                        if (data && (data.ok === true || data.status === 'running')) {
+                            console.log('API Status: Connected', data);
+                            var existingBanner = document.getElementById('api-warning-banner');
+                            if (existingBanner) {
+                                existingBanner.remove();
+                            }
+                        } else {
+                            throw new Error('API returned error status');
+                        }
+                    })
+                    .catch(function (err) {
+                        var errMsg = err.message || String(err);
+                        console.warn('API health check:', errMsg);
+                        var existingBanner = document.getElementById('api-warning-banner');
+                        if (errMsg.includes('404') || errMsg.includes('not found') || errMsg.includes('Failed to fetch')) {
+                            if (!existingBanner) {
+                                var banner = document.createElement('div');
+                                banner.id = 'api-warning-banner';
+                                banner.style.cssText = 'position:fixed;top:0;left:0;right:0;background:#ef4444;color:#fff;padding:1rem;text-align:center;z-index:99999;font-family:system-ui;display:flex;align-items:center;justify-content:center;gap:0.5rem;';
+                                banner.innerHTML = '<i class="fa fa-exclamation-triangle"></i> السيرفر غير متصل. شغّل: <code style="background:rgba(0,0,0,0.3);padding:0.2rem 0.5rem;border-radius:4px;font-family:monospace;">python app.py</code>';
+                                document.body.appendChild(banner);
+                            }
+                        } else if (existingBanner) {
+                            existingBanner.remove();
+                        }
+                    });
+            }, 1500);
+
+            var statsLoaded = false;
+            var alertsLoaded = false;
+            var statsLoading = false;
+            var alertsLoading = false;
+
+            function loadStats() {
+                if (statsLoading) return;
+                if (statsLoaded) return;
+                statsLoading = true;
+
+                fetch(API + '/api/stats').then(function (r) { return r.json(); }).then(function (s) {
+                    if (s) {
+                        var u = s.urls || {}, a = s.alerts || {}, an = s.analyses || {};
+                        var total = u.total || 0, mal = u.malicious || 0, sus = u.suspicious || 0, safe = u.safe || 0;
+                        var alertsActive = a.active || 0;
+                        var analysesTotal = an.total || 0, analysesToday = an.today || 0;
+
+                        var el = document.getElementById('stat-total'); if (el) el.textContent = total;
+                        el = document.getElementById('stat-malicious'); if (el) el.textContent = mal;
+                        el = document.getElementById('stat-suspicious'); if (el) el.textContent = sus;
+                        el = document.getElementById('stat-safe'); if (el) el.textContent = safe;
+                        el = document.getElementById('stat-analyses-total'); if (el) el.textContent = analysesTotal;
+                        el = document.getElementById('stat-analyses-today'); if (el) el.textContent = analysesToday;
+                        el = document.getElementById('alert-count-header'); if (el) el.textContent = alertsActive;
+                    }
+                    statsLoaded = true;
+                    statsLoading = false;
+                }).catch(function () {
+                    statsLoading = false;
+                });
+            }
+
+            function loadAlerts() {
+                if (alertsLoading) return;
+                if (alertsLoaded) return;
+                alertsLoading = true;
+
+                fetch(API + '/api/alerts').then(function (r) { return r.json(); }).then(function (alerts) {
+                    var c = document.getElementById('alerts-content');
+                    if (!c) {
+                        alertsLoading = false;
+                        return;
+                    }
+                    var lang = 'ar';
+                    if (typeof currentLang !== 'undefined') {
+                        if (typeof currentLang === 'function') {
+                            lang = currentLang() || 'ar';
+                        } else {
+                            lang = currentLang || 'ar';
+                        }
+                    }
+                    var emptyText = lang === 'ar' ? 'لا توجد تنبيهات نشطة' : 'No active alerts';
+                    var alertText = lang === 'ar' ? 'تنبيه' : 'Alert';
+                    if (alerts && alerts.length > 0) {
+                        c.innerHTML = alerts.map(function (a) {
+                            return '<div class="alert-item">' + (a.message || a.url || alertText) + '</div>';
+                        }).join('');
+                    } else {
+                        c.innerHTML = '<p class="alerts-empty" data-translate="main.alerts.empty">' + emptyText + '</p>';
+                    }
+                    alertsLoaded = true;
+                    alertsLoading = false;
+                }).catch(function () {
+                    alertsLoading = false;
+                });
+            }
+
+            // لا نقوم بتحميل البيانات هنا - checkUserStatus() سيتولى ذلك للمستخدمين المسجلين
+            // هذا يمنع التحميل المكرر
+
+            window.loadStats = function () {
+                statsLoaded = false;
+                loadStats();
+            };
+            window.loadAlerts = function () {
+                alertsLoaded = false;
+                loadAlerts();
+            };
+        })();
+    </script>
+</body>
+
+</html>

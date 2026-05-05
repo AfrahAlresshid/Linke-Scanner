@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-translate="page.title.profile">الملف الشخصي - LinkScanne</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <h1>LinkScanne</h1>
+                <i class="fa fa-shield-alt"></i>
+            </div>
+            <nav class="header-nav">
+                <ul class="nav-links">
+                    <li><a href="index.html"><i class="fa fa-home"></i> <span data-translate="nav.home">الرئيسية</span></a></li>
+                    <li><a href="about.html"><i class="fa fa-info-circle"></i> <span data-translate="nav.about">عن المشروع</span></a></li>
+                    <li><a href="profile.html" class="active"><i class="fa fa-address-card"></i> <span data-translate="nav.profile">الملف الشخصي</span></a></li>
+                </ul>
+            </nav>
+            <div class="header-left">
+                <button id="language-toggle" class="language-btn" onclick="toggleLanguage()">
+                    <i class="fa fa-language"></i>
+                    <span id="language-text">English</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <main class="main-content">
+            <div class="auth-page">
+                <div class="auth-container profile-page-wrap">
+                    <div class="auth-card" id="profile-card">
+                        <div class="auth-header">
+                            <h2><i class="fa fa-user-circle"></i> <span data-translate="profile.title">الملف الشخصي</span></h2>
+                            <p id="profile-subtitle" data-translate="profile.subtitle">عرض وتعديل بيانات الحساب</p>
+                        </div>
+
+                        <div id="profile-loading" style="text-align:center;padding:2rem;color:var(--text-muted);">
+                            <i class="fa fa-spinner fa-spin fa-2x"></i>
+                        </div>
+
+                        <div id="profile-content" style="display:none;">
+                            <div class="profile-stats" id="profile-stats">
+                                <div class="profile-stat-card">
+                                    <div class="profile-stat-icon"><i class="fa fa-calendar-plus"></i></div>
+                                    <div class="profile-stat-label"><span data-translate="profile.stat.created">تاريخ التسجيل</span></div>
+                                    <div class="profile-stat-value" id="stat-created">—</div>
+                                </div>
+                                <div class="profile-stat-card">
+                                    <div class="profile-stat-icon"><i class="fa fa-clock"></i></div>
+                                    <div class="profile-stat-label"><span data-translate="profile.stat.lastlogin">آخر دخول</span></div>
+                                    <div class="profile-stat-value" id="stat-lastlogin">—</div>
+                                </div>
+                                <div class="profile-stat-card profile-stat-card--plan">
+                                    <div class="profile-stat-icon" id="stat-plan-icon"><i class="fa fa-layer-group"></i></div>
+                                    <div class="profile-stat-label"><span data-translate="profile.stat.plan">الخطة</span></div>
+                                    <div class="profile-stat-value" id="stat-plan">—</div>
+                                </div>
+                            </div>
+
+                            <div class="profile-panel">
+                                <h3 class="profile-panel-title" data-translate="profile.section.basic">البيانات الأساسية</h3>
+                                <form class="auth-form profile-form" id="profile-form">
+                                    <div class="profile-field-cards">
+                                        <div class="profile-field-card">
+                                            <label for="pf-name"><i class="fa fa-user"></i> <span data-translate="profile.name">الاسم</span></label>
+                                            <input type="text" id="pf-name" required maxlength="100" autocomplete="name">
+                                        </div>
+                                        <div class="profile-field-card">
+                                            <label for="pf-email"><i class="fa fa-envelope"></i> <span data-translate="profile.email">البريد الإلكتروني</span></label>
+                                            <input type="email" id="pf-email" required maxlength="100" autocomplete="email">
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary btn-full profile-save-btn" id="pf-save-btn" data-translate="profile.save">
+                                        <i class="fa fa-save"></i> حفظ التغييرات
+                                    </button>
+                                </form>
+                            </div>
+
+                            <div class="profile-panel">
+                                <h3 class="profile-panel-title" data-translate="profile.section.password">تغيير كلمة المرور</h3>
+                                <form class="auth-form profile-form" id="password-form">
+                                    <div class="profile-field-cards profile-field-cards--stack">
+                                        <div class="profile-field-card">
+                                            <label for="pf-cur-pw"><i class="fa fa-lock"></i> <span data-translate="profile.current_password">كلمة المرور الحالية</span></label>
+                                            <input type="password" id="pf-cur-pw" autocomplete="current-password" minlength="1">
+                                        </div>
+                                        <div class="profile-field-card">
+                                            <label for="pf-new-pw"><i class="fa fa-key"></i> <span data-translate="profile.new_password">كلمة المرور الجديدة</span></label>
+                                            <input type="password" id="pf-new-pw" autocomplete="new-password" minlength="6" data-translate="profile.new_placeholder" placeholder="6 أحرف على الأقل">
+                                        </div>
+                                        <div class="profile-field-card">
+                                            <label for="pf-new-pw2"><i class="fa fa-check"></i> <span data-translate="profile.confirm_password">تأكيد كلمة المرور</span></label>
+                                            <input type="password" id="pf-new-pw2" autocomplete="new-password" minlength="6">
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary btn-full profile-pw-btn" id="pf-pw-btn" data-translate="profile.update_password">
+                                        <i class="fa fa-shield-alt"></i> تحديث كلمة المرور
+                                    </button>
+                                </form>
+                            </div>
+
+                            <div class="auth-footer" style="margin-top:2rem;">
+                                <p><a href="index.html"><i class="fa fa-arrow-right"></i> <span data-translate="profile.back_home">العودة للرئيسية</span></a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p data-translate="footer.text">&copy; 2025 LinkScanne - نظام تحليل الروابط الذكي</p>
+        </footer>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/translations.js"></script>
+    <script src="js/notify.js"></script>
+    <script>
+    (function() {
+        var savedLang = localStorage.getItem('linkScanne_language');
+        if (!savedLang || (savedLang !== 'ar' && savedLang !== 'en')) {
+            savedLang = 'ar';
+            localStorage.setItem('linkScanne_language', 'ar');
+        }
+        var dir = savedLang === 'ar' ? 'rtl' : 'ltr';
+        document.documentElement.setAttribute('dir', dir);
+        document.documentElement.setAttribute('lang', savedLang);
+        document.documentElement.style.direction = dir;
+    })();
+    </script>
+    <script>
+    function toggleLanguage() {
+        var cur = typeof currentLang === 'function' ? currentLang() : (typeof currentLang !== 'undefined' ? currentLang : 'ar');
+        var newLang = cur === 'ar' ? 'en' : 'ar';
+        if (typeof setLanguage === 'function') {
+            setLanguage(newLang);
+        } else {
+            localStorage.setItem('linkScanne_language', newLang);
+            location.reload();
+            return;
+        }
+        setTimeout(function () {
+            var btn = document.getElementById('language-text');
+            if (btn && typeof translate === 'function') {
+                btn.textContent = translate('nav.language');
+            }
+            if (typeof window.refreshProfileIfLoaded === 'function') {
+                window.refreshProfileIfLoaded();
+            }
+        }, 50);
+    }
+    </script>
+    <script>
+    (function () {
+        var API = (typeof API_BASE !== 'undefined') ? API_BASE : 'http://127.0.0.1:5000';
+        var lastProfileUser = null;
+
+        function fmtDate(iso) {
+            if (!iso) return '—';
+            try {
+                var d = new Date(iso);
+                if (isNaN(d.getTime())) return iso;
+                return d.toLocaleString(document.documentElement.lang === 'en' ? 'en-GB' : 'ar-SA');
+            } catch (e) {
+                return iso;
+            }
+        }
+
+        function t(key) {
+            return (typeof translate === 'function') ? translate(key) : key;
+        }
+
+        function showProfile(user) {
+            lastProfileUser = user;
+            document.getElementById('profile-loading').style.display = 'none';
+            document.getElementById('profile-content').style.display = 'block';
+            document.getElementById('pf-name').value = user.name || '';
+            document.getElementById('pf-email').value = user.email || '';
+            document.getElementById('stat-created').textContent = fmtDate(user.created_at);
+            document.getElementById('stat-lastlogin').textContent = fmtDate(user.last_login);
+            var planEl = document.getElementById('stat-plan');
+            var planIcon = document.getElementById('stat-plan-icon');
+            var planCard = document.querySelector('.profile-stat-card--plan');
+            if (user.is_premium) {
+                planIcon.innerHTML = '<i class="fa fa-crown" style="color:#fbbf24;"></i>';
+                planEl.innerHTML = t('profile.plan.premium') + (user.premium_expires_at
+                    ? '<span class="profile-stat-sub">' + fmtDate(user.premium_expires_at) + '</span>'
+                    : '');
+                if (planCard) {
+                    planCard.classList.add('profile-stat-card--premium');
+                }
+            } else {
+                planIcon.innerHTML = '<i class="fa fa-layer-group"></i>';
+                planEl.textContent = t('profile.plan.standard');
+                if (planCard) {
+                    planCard.classList.remove('profile-stat-card--premium');
+                }
+            }
+        }
+
+        window.refreshProfileIfLoaded = function () {
+            if (lastProfileUser) {
+                showProfile(lastProfileUser);
+            }
+        };
+
+        fetch(API + '/api/auth/me', { credentials: 'include' })
+            .then(function (r) { return r.json(); })
+            .then(function (data) {
+                if (!data.is_logged_in || !data.user) {
+                    window.location.href = 'login.html';
+                    return null;
+                }
+                return fetch(API + '/api/user/profile', { credentials: 'include' });
+            })
+            .then(function (r) {
+                if (!r) {
+                    return null;
+                }
+                if (!r.ok) {
+                    throw new Error('profile');
+                }
+                return r.json();
+            })
+            .then(function (data) {
+                if (data && data.user) {
+                    showProfile(data.user);
+                }
+            })
+            .catch(function () {
+                var el = document.getElementById('profile-loading');
+                if (el) {
+                    el.innerHTML =
+                        '<p style="color:var(--danger);">' + t('profile.error_load') +
+                        ' <a href="login.html">' + t('profile.error_login') + '</a></p>';
+                }
+            });
+
+        document.getElementById('profile-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            var btn = document.getElementById('pf-save-btn');
+            btn.disabled = true;
+            fetch(API + '/api/user/profile', {
+                method: 'PUT',
+                credentials: 'include',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    name: document.getElementById('pf-name').value.trim(),
+                    email: document.getElementById('pf-email').value.trim()
+                })
+            })
+                .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, body: j }; }); })
+                .then(function (res) {
+                    if (res.ok && res.body.user) {
+                        try {
+                            localStorage.setItem('currentUser', JSON.stringify({
+                                id: res.body.user.id,
+                                name: res.body.user.name,
+                                email: res.body.user.email,
+                                is_premium: res.body.user.is_premium
+                            }));
+                        } catch (err) {}
+                        showProfile(res.body.user);
+                        if (typeof LinkNotify !== 'undefined') {
+                            LinkNotify.show(res.body.message || t('profile.notify.saved'), 'success', 4000);
+                        }
+                    } else {
+                        if (typeof LinkNotify !== 'undefined') {
+                            LinkNotify.show(res.body.error || t('profile.notify.save_fail'), 'error', 5000);
+                        }
+                    }
+                })
+                .catch(function () {
+                    if (typeof LinkNotify !== 'undefined') {
+                        LinkNotify.show(t('profile.notify.conn'), 'error', 5000);
+                    }
+                })
+                .finally(function () {
+                    btn.disabled = false;
+                });
+        });
+
+        document.getElementById('password-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            var cur = document.getElementById('pf-cur-pw').value;
+            var nw = document.getElementById('pf-new-pw').value;
+            var nw2 = document.getElementById('pf-new-pw2').value;
+            if (nw !== nw2) {
+                if (typeof LinkNotify !== 'undefined') {
+                    LinkNotify.show(t('profile.notify.pw_mismatch'), 'warning', 4500);
+                }
+                return;
+            }
+            var btn = document.getElementById('pf-pw-btn');
+            btn.disabled = true;
+            fetch(API + '/api/user/password', {
+                method: 'PUT',
+                credentials: 'include',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ current_password: cur, new_password: nw })
+            })
+                .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, body: j }; }); })
+                .then(function (res) {
+                    if (res.ok) {
+                        document.getElementById('pf-cur-pw').value = '';
+                        document.getElementById('pf-new-pw').value = '';
+                        document.getElementById('pf-new-pw2').value = '';
+                        if (typeof LinkNotify !== 'undefined') {
+                            LinkNotify.show(res.body.message || t('profile.notify.pw_ok'), 'success', 4000);
+                        }
+                    } else {
+                        if (typeof LinkNotify !== 'undefined') {
+                            LinkNotify.show(res.body.error || t('profile.notify.pw_fail'), 'error', 5000);
+                        }
+                    }
+                })
+                .catch(function () {
+                    if (typeof LinkNotify !== 'undefined') {
+                        LinkNotify.show(t('profile.notify.conn'), 'error', 5000);
+                    }
+                })
+                .finally(function () {
+                    btn.disabled = false;
+                });
+        });
+    })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-translate="page.title.about">عن المشروع - LinkScanne</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <h1>LinkScanne</h1>
+                <i class="fa fa-shield-alt"></i>
+            </div>
+            <nav class="header-nav">
+                <ul class="nav-links">
+                    <li><a href="index.html"><i class="fa fa-home"></i> <span data-translate="nav.home">الرئيسية</span></a></li>
+                    <li><a href="about.html" class="active"><i class="fa fa-info-circle"></i> <span data-translate="nav.about">عن المشروع</span></a></li>
+                    <li><a href="login.html"><i class="fa fa-key"></i> <span data-translate="nav.login">تسجيل الدخول</span></a></li>
+                    <li><a href="register.html" class="btn-register"><i class="fa fa-user-plus"></i> <span data-translate="nav.register">إنشاء حساب</span></a></li>
+                </ul>
+            </nav>
+            <div class="header-left">
+                <button id="language-toggle" class="language-btn" onclick="toggleLanguage()">
+                    <i class="fa fa-language"></i>
+                    <span id="language-text">English</span>
+                </button>
+                <div class="icon-badge">
+                    <i class="fa fa-link"></i>
+                    <span>0</span>
+                </div>
+                <div class="icon-badge">
+                    <i class="fa fa-exclamation-triangle"></i>
+                    <span>0</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <main class="main-content">
+            <div class="about-page">
+                <div class="about-hero">
+                    <h1><i class="fa fa-shield-alt"></i> LinkScanne</h1>
+                    <p class="hero-subtitle" data-translate="about.subtitle">نظام تحليل الروابط الذكي والحماية من التهديدات السيبرانية</p>
+                </div>
+
+                <div class="about-section">
+                    <h2><i class="fa fa-brain"></i> <span data-translate="about.overview">نظرة عامة على المشروع</span></h2>
+                    <p data-translate="about.overview.text">LinkScanne هو نظام ويب متطور ومتكامل مصمم لتحليل الروابط واكتشاف التهديدات السيبرانية باستخدام
+                        أحدث تقنيات الذكاء الاصطناعي والتعلم الآلي. يهدف المشروع إلى توفير حماية شاملة للمستخدمين من
+                        الروابط الخبيثة والمواقع المشبوهة.</p>
+                    
+                    <div class="important-info-card">
+                        <div class="info-header">
+                            <h3 data-translate="about.important">معلومات مهمة</h3>
+                        </div>
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <div class="info-icon">
+                                    <i class="fa fa-bullseye"></i>
+                                </div>
+                                <div class="info-content">
+                                    <h4 data-translate="about.important.accuracy">دقة التحليل</h4>
+                                    <p data-translate="about.important.accuracy.text">النظام يحقق دقة عالية تصل إلى 95% في تصنيف الروابط</p>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-icon">
+                                    <i class="fa fa-tachometer-alt"></i>
+                                </div>
+                                <div class="info-content">
+                                    <h4 data-translate="about.important.speed">سرعة التحليل</h4>
+                                    <p data-translate="about.important.speed.text">يستغرق التحليل عادة من 5 إلى 15 ثانية حسب تعقيد الرابط</p>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-icon">
+                                    <i class="fa fa-lock"></i>
+                                </div>
+                                <div class="info-content">
+                                    <h4 data-translate="about.important.privacy">الخصوصية</h4>
+                                    <p data-translate="about.important.privacy.text">جميع البيانات محفوظة محلياً ولا يتم إرسالها لخوادم خارجية</p>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-icon">
+                                    <i class="fa fa-universal-access"></i>
+                                </div>
+                                <div class="info-content">
+                                    <h4 data-translate="about.important.accessibility">إمكانية الوصول</h4>
+                                    <p data-translate="about.important.accessibility.text">يدعم النظام القراءة الصوتية للكفيفين وضعاف البصر</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="features-grid">
+                        <div class="feature-card">
+                            <i class="fa fa-brain"></i>
+                            <h3 data-translate="about.features.ai">الذكاء الاصطناعي</h3>
+                            <p data-translate="about.features.ai.text">استخدام نماذج التعلم الآلي المتقدمة لتصنيف الروابط بناءً على الميزات اللغوية والإحصائية</p>
+                        </div>
+                        <div class="feature-card">
+                            <i class="fa fa-play"></i>
+                            <h3 data-translate="about.features.dynamic">التحليل الديناميكي</h3>
+                            <p data-translate="about.features.dynamic.text">فحص سلوك الروابط في بيئة Sandbox آمنة لمراقبة الأنشطة المشبوهة</p>
+                            <p style="font-size: 0.85rem; color: var(--warning); margin-top: 0.5rem; display: flex; align-items: flex-start; gap: 0.4rem;">
+                                <i class="fa fa-info-circle" style="font-size: 0.8em; color: var(--warning); margin-top: 0.15rem; flex-shrink: 0;"></i>
+                                <span><strong data-translate="about.features.dynamic.note">ملاحظة: بيئة Sandbox في هذا المشروع (مشروع التخرج) هي محاكاة فقط ولا تقوم بتنفيذ فعلي للكود</strong></span>
+                            </p>
+                        </div>
+                        <div class="feature-card">
+                            <i class="fa fa-shield-alt"></i>
+                            <h3 data-translate="about.features.vt">VirusTotal Integration</h3>
+                            <p data-translate="about.features.vt.text">التكامل مع قاعدة البيانات العالمية للروابط الخبيثة للحصول على أحدث المعلومات</p>
+                        </div>
+                        <div class="feature-card">
+                            <i class="fa fa-bell"></i>
+                            <h3 data-translate="about.features.alerts">نظام التنبيهات</h3>
+                            <p data-translate="about.features.alerts.text">مراقبة فورية وإشعارات تلقائية عند اكتشاف أنماط خطيرة أو مشبوهة</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="about-section">
+                    <h2 data-translate="about.tech">التقنيات المستخدمة</h2>
+                    <div class="tech-stack">
+                        <div class="tech-category">
+                            <h3><i class="fa fa-code"></i> <span data-translate="about.tech.cat.backend">Backend</span></h3>
+                            <ul>
+                                <li data-translate-html="about.tech.back.1"></li>
+                                <li data-translate-html="about.tech.back.2"></li>
+                                <li data-translate-html="about.tech.back.3"></li>
+                                <li data-translate-html="about.tech.back.4"></li>
+                            </ul>
+                        </div>
+                        <div class="tech-category">
+                            <h3><i class="fa fa-brain"></i> <span data-translate="about.tech.cat.ml">Machine Learning</span></h3>
+                            <ul>
+                                <li data-translate-html="about.tech.ml.1"></li>
+                                <li data-translate-html="about.tech.ml.2"></li>
+                                <li data-translate-html="about.tech.ml.3"></li>
+                                <li data-translate-html="about.tech.ml.4"></li>
+                            </ul>
+                        </div>
+                        <div class="tech-category">
+                            <h3><i class="fa fa-paint-brush"></i> <span data-translate="about.tech.cat.frontend">Frontend</span></h3>
+                            <ul>
+                                <li data-translate-html="about.tech.fe.1"></li>
+                                <li data-translate-html="about.tech.fe.2"></li>
+                                <li data-translate-html="about.tech.fe.3"></li>
+                                <li data-translate-html="about.tech.fe.4"></li>
+                            </ul>
+                        </div>
+                        <div class="tech-category">
+                            <h3><i class="fa fa-cloud"></i> <span data-translate="about.tech.cat.api">APIs & Integrations</span></h3>
+                            <ul>
+                                <li data-translate-html="about.tech.api.1"></li>
+                                <li data-translate-html="about.tech.api.2"></li>
+                                <li data-translate-html="about.tech.api.3"></li>
+                                <li data-translate-html="about.tech.api.4"></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="about-section">
+                    <h2><i class="fa fa-chart-line"></i> <span data-translate="about.workflow">كيفية عمل النظام</span></h2>
+                    <div class="workflow">
+                        <div class="workflow-step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h3 data-translate="about.workflow.step1">إدخال الرابط</h3>
+                                <p data-translate="about.workflow.step1.text">يقوم المستخدم بإدخال الرابط المراد تحليله في واجهة النظام</p>
+                            </div>
+                        </div>
+                        <div class="workflow-step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h3 data-translate="about.workflow.step2">التحليل متعدد المستويات</h3>
+                                <p data-translate="about.workflow.step2.text">يتم تحليل الرابط باستخدام أربع طرق مختلفة: التعلم الآلي، التحليل الديناميكي (محاكاة Sandbox)،
+                                    VirusTotal، والتحليل الاستدلالي</p>
+                                <p style="font-size: 0.85rem; color: var(--warning); margin-top: 0.5rem; display: flex; align-items: flex-start; gap: 0.4rem;">
+                                    <i class="fa fa-info-circle" style="font-size: 0.8em; color: var(--warning); margin-top: 0.15rem; flex-shrink: 0;"></i>
+                                    <span data-translate="about.workflow.step2.note">ملاحظة: التحليل الديناميكي في هذا المشروع (مشروع التخرج) يعتمد على محاكاة وليس تنفيذ فعلي</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="workflow-step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h3 data-translate="about.workflow.step3">دمج النتائج</h3>
+                                <p data-translate="about.workflow.step3.text">يتم دمج جميع النتائج باستخدام أوزان محددة لحساب النتيجة النهائية</p>
+                            </div>
+                        </div>
+                        <div class="workflow-step">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h3 data-translate="about.workflow.step4">التصنيف النهائي</h3>
+                                <p data-translate="about.workflow.step4.text">يتم تصنيف الرابط كـ آمن، مشبوه، أو خبيث بناءً على النتيجة المحسوبة</p>
+                            </div>
+                        </div>
+                        <div class="workflow-step">
+                            <div class="step-number">5</div>
+                            <div class="step-content">
+                                <h3 data-translate="about.workflow.step5">عرض النتائج</h3>
+                                <p data-translate="about.workflow.step5.text">يتم عرض النتائج التفصيلية للمستخدم مع إمكانية حفظها (للمستخدمين المسجلين)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="about-section">
+                    <h2><i class="fa fa-shield-alt"></i> <span data-translate="about.security">ميزات الأمان</span></h2>
+                    <div class="security-features">
+                        <div class="security-item">
+                            <i class="fa fa-lock"></i>
+                            <h3 data-translate="about.security.isolated">البيئة المعزولة</h3>
+                            <p data-translate="about.security.isolated.text">جميع عمليات التحليل تتم في بيئة Sandbox آمنة ومعزولة</p>
+                            <p style="font-size: 0.85rem; color: var(--warning); margin-top: 0.5rem; display: flex; align-items: flex-start; gap: 0.4rem;">
+                                <i class="fa fa-info-circle" style="font-size: 0.8em; color: var(--warning); margin-top: 0.15rem; flex-shrink: 0;"></i>
+                                <span data-translate="about.security.isolated.note">ملاحظة: في هذا المشروع (مشروع التخرج)، بيئة Sandbox هي محاكاة فقط</span>
+                            </p>
+                        </div>
+                        <div class="security-item">
+                            <i class="fa fa-database"></i>
+                            <h3 data-translate="about.security.local">البيانات المحلية</h3>
+                            <p data-translate="about.security.local.text">جميع البيانات والنتائج محفوظة محلياً ولا يتم إرسالها لخوادم خارجية</p>
+                        </div>
+                        <div class="security-item">
+                            <i class="fa fa-eye-slash"></i>
+                            <h3 data-translate="about.security.privacy">الخصوصية</h3>
+                            <p data-translate="about.security.privacy.text">لا يتم تتبع أو حفظ معلومات المستخدمين الشخصية</p>
+                        </div>
+                        <div class="security-item">
+                            <i class="fa fa-clock"></i>
+                            <h3 data-translate="about.security.monitoring">المراقبة المستمرة</h3>
+                            <p data-translate="about.security.monitoring.text">نظام تنبيهات ذكي لمراقبة الأنماط المشبوهة والتهديدات الجديدة</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="about-section">
+                    <h2><i class="fa fa-target"></i> <span data-translate="about.goals">الأهداف والرؤية</span></h2>
+                    <div class="goals">
+                        <div class="goal-item">
+                            <h3><i class="fa fa-globe"></i> <span data-translate="about.goals.protection">الحماية الشاملة</span></h3>
+                            <p data-translate="about.goals.protection.text">توفير حماية شاملة ومتكاملة من جميع أنواع التهديدات السيبرانية</p>
+                        </div>
+                        <div class="goal-item">
+                            <h3><i class="fa fa-users"></i> <span data-translate="about.goals.usability">سهولة الاستخدام</span></h3>
+                            <p data-translate="about.goals.usability.text">واجهة مستخدم بسيطة وسهلة الاستخدام لجميع المستخدمين</p>
+                        </div>
+                        <div class="goal-item">
+                            <h3><i class="fa fa-rocket"></i> <span data-translate="about.goals.performance">الأداء العالي</span></h3>
+                            <p data-translate="about.goals.performance.text">تحليل سريع ودقيق للروابط مع استهلاك موارد محدود</p>
+                        </div>
+                        <div class="goal-item">
+                            <h3><i class="fa fa-graduation-cap"></i> <span data-translate="about.goals.development">التطوير المستمر</span></h3>
+                            <p data-translate="about.goals.development.text">تحديث وتحسين النظام باستمرار لمواجهة التهديدات الجديدة</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="about-section">
+                    <h2><i class="fa fa-volume-up"></i> <span data-translate="about.accessibility">إمكانية الوصول وقراءة النتائج صوتياً</span></h2>
+                    <div class="accessibility-section">
+                        <div class="accessibility-feature">
+                            <i class="fa fa-universal-access"></i>
+                            <h3 data-translate="about.accessibility.vision">دعم الكفيفين وضعاف البصر</h3>
+                            <p data-translate="about.accessibility.vision.text">يقدم LinkScanne ميزة متقدمة لقراءة نتائج التحليل صوتياً باستخدام Web Speech API، مما يتيح للمستخدمين الكفيفين وضعاف البصر الاستماع إلى النتائج التفصيلية بدلاً من قراءتها.</p>
+                        </div>
+                        <div class="accessibility-feature">
+                            <i class="fa fa-volume-up"></i>
+                            <h3 data-translate="about.accessibility.detailed">القراءة التفصيلية</h3>
+                            <p data-translate="about.accessibility.detailed.text">تتضمن القراءة الصوتية جميع تفاصيل التحليل: التصنيف النهائي، نتائج التعلم الآلي مع الاحتمالات، نتائج التحليل الديناميكي مع الأحداث المكتشفة، نتائج VirusTotal، والتحليل الاستدلالي.</p>
+                        </div>
+                        <div class="accessibility-feature">
+                            <i class="fa fa-cog"></i>
+                            <h3 data-translate="about.accessibility.easy">سهولة الاستخدام</h3>
+                            <p data-translate="about.accessibility.easy.text">يمكن تفعيل أو إيقاف القراءة الصوتية بسهولة من خلال الأزرار المخصصة في صفحة النتائج. يتم حفظ تفضيلات المستخدم محلياً.</p>
+                        </div>
+                        <div class="accessibility-feature">
+                            <i class="fa fa-language"></i>
+                            <h3 data-translate="about.accessibility.arabic">دعم اللغة العربية</h3>
+                            <p data-translate="about.accessibility.arabic.text">القراءة الصوتية تدعم اللغة العربية بالكامل مع نطق صحيح للمصطلحات التقنية والنتائج.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="about-section">
+                    <h2><i class="fa fa-question-circle"></i> <span data-translate="about.faq">الأسئلة الشائعة</span></h2>
+                    <div class="faq">
+                        <div class="faq-item">
+                            <h3 data-translate="about.faq.safe">هل النظام آمن للاستخدام؟</h3>
+                            <p data-translate="about.faq.safe.text">نعم، النظام آمن تماماً. جميع العمليات تتم محلياً ولا يتم إرسال أي بيانات شخصية لخوادم
+                                خارجية.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3 data-translate="about.faq.accuracy">ما هي دقة التحليل؟</h3>
+                            <p data-translate="about.faq.accuracy.text">النظام يحقق دقة عالية تصل إلى 95% في تصنيف الروابط باستخدام تقنيات متعددة ومتقدمة.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3 data-translate="about.faq.save">هل يمكن حفظ النتائج؟</h3>
+                            <p data-translate="about.faq.save.text">نعم، يمكن للمستخدمين المسجلين حفظ نتائج التحليل والرجوع إليها لاحقاً.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3 data-translate="about.faq.speed">ما هي سرعة التحليل؟</h3>
+                            <p data-translate="about.faq.speed.text">يستغرق التحليل عادة من 5 إلى 15 ثانية حسب تعقيد الرابط وطبيعة التحليل المطلوب.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p data-translate="footer.text">&copy; 2025 LinkScanne - نظام تحليل الروابط الذكي</p>
+        </footer>
+    </div>
+    <script src="js/config.js"></script>
+    <script>
+    // تطبيق الاتجاه فوراً حسب اللغة المحفوظة
+    (function() {
+        var savedLang = localStorage.getItem('linkScanne_language');
+        // إذا لم تكن هناك لغة محفوظة، استخدم العربية كافتراضية
+        if (!savedLang || (savedLang !== 'ar' && savedLang !== 'en')) {
+            savedLang = 'ar';
+            localStorage.setItem('linkScanne_language', 'ar');
+        }
+        // تطبيق الاتجاه حسب اللغة
+        var dir = savedLang === 'ar' ? 'rtl' : 'ltr';
+        document.documentElement.setAttribute('dir', dir);
+        document.documentElement.setAttribute('lang', savedLang);
+        if (document.body) {
+            document.body.setAttribute('dir', dir);
+            document.body.setAttribute('lang', savedLang);
+        }
+        // تطبيق CSS للاتجاه أيضاً
+        document.documentElement.style.direction = dir;
+        if (document.body) {
+            document.body.style.direction = dir;
+        }
+    })();
+    </script>
+    <script src="js/translations.js"></script>
+    <script>
+    function toggleLanguage() {
+        var current = currentLang();
+        var newLang = current === 'ar' ? 'en' : 'ar';
+        
+        // تغيير اللغة - هذا سيحفظها في localStorage ويطبقها
+        if (typeof setLanguage === 'function') {
+            setLanguage(newLang);
+        } else {
+            // Fallback إذا لم تكن الدالة متاحة
+            currentLang = newLang;
+            localStorage.setItem('linkScanne_language', newLang);
+            if (typeof applyLanguage === 'function') {
+                applyLanguage();
+            }
+        }
+        
+        // تحديث زر اللغة فوراً
+        updateLanguageButton();
+        
+        // إعادة تطبيق الترجمة بشكل كامل
+        setTimeout(function() {
+            if (typeof applyLanguage === 'function') {
+                applyLanguage();
+            }
+            updateLanguageButton();
+        }, 100);
+    }
+    
+    function updateLanguageButton() {
+        var btn = document.getElementById('language-text');
+        if (btn) {
+            btn.textContent = translate('nav.language');
+        }
+    }
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        applyLanguage();
+        updateLanguageButton();
+    });
+    
+    (function(){
+        var u = localStorage.getItem('currentUser');
+        var auth = document.getElementById('auth-buttons');
+        var menu = document.getElementById('user-menu');
+        var saved = document.getElementById('saved-link');
+        var nameEl = document.getElementById('user-name');
+        if (u) {
+            try {
+                var user = JSON.parse(u);
+                if (auth) auth.style.display = 'none';
+                if (menu) menu.style.display = 'flex';
+                if (saved) saved.style.display = 'block';
+                if (nameEl) nameEl.textContent = user.name || user.email;
+            } catch(e) {}
+        }
+        window.logout = function() {
+            localStorage.removeItem('currentUser');
+            window.location.href = 'index.html';
+        };
+    })();
+    </script>
+</body>
+</html>

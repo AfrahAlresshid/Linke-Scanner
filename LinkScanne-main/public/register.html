@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-translate="page.title.register">إنشاء حساب - LinkScanne</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <h1>LinkScanne</h1>
+                <i class="fa fa-shield-alt"></i>
+            </div>
+            <nav class="header-nav">
+                <ul class="nav-links">
+                    <li><a href="index.html"><i class="fa fa-home"></i> <span data-translate="nav.home">الرئيسية</span></a></li>
+                    <li><a href="about.html"><i class="fa fa-info-circle"></i> <span data-translate="nav.about">عن المشروع</span></a></li>
+                    <li><a href="login.html"><i class="fa fa-key"></i> <span data-translate="nav.login">تسجيل الدخول</span></a></li>
+                    <li><a href="register.html" class="btn-register"><i class="fa fa-user-plus"></i> <span data-translate="nav.register">إنشاء حساب</span></a></li>
+                </ul>
+            </nav>
+            <div class="header-left">
+                <button id="language-toggle" class="language-btn" onclick="toggleLanguage()">
+                    <i class="fa fa-language"></i>
+                    <span id="language-text">English</span>
+                </button>
+                <div class="icon-badge">
+                    <i class="fa fa-link"></i>
+                    <span>0</span>
+                </div>
+                <div class="icon-badge">
+                    <i class="fa fa-exclamation-triangle"></i>
+                    <span>0</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <main class="main-content">
+            <div class="auth-page">
+                <div class="auth-container">
+                    <div class="auth-card">
+                        <div class="auth-header">
+                            <h2><i class="fa fa-user-plus"></i> <span data-translate="auth.register.title">إنشاء حساب جديد</span></h2>
+                            <p data-translate="auth.register.subtitle">انضم إلى LinkScanne لحماية أفضل</p>
+                        </div>
+                        <form class="auth-form" id="register-form">
+                            <div class="form-group">
+                                <label for="name" data-translate="auth.register.name">الاسم الكامل</label>
+                                <input type="text" id="name" name="name" data-translate="auth.register.placeholder_name" placeholder="أدخل اسمك الكامل" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email" data-translate="auth.register.email">البريد الإلكتروني</label>
+                                <input type="email" id="email" name="email" data-translate="auth.register.placeholder_email" placeholder="أدخل بريدك الإلكتروني" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="password" data-translate="auth.register.password">كلمة المرور</label>
+                                <input type="password" id="password" name="password" data-translate="auth.register.placeholder_password" placeholder="أدخل كلمة المرور" required minlength="6">
+                            </div>
+                            <div class="form-group">
+                                <label for="confirm-password" data-translate="auth.register.confirm">تأكيد كلمة المرور</label>
+                                <input type="password" id="confirm-password" name="confirm-password" data-translate="auth.register.placeholder_confirm" placeholder="أعد إدخال كلمة المرور" required>
+                            </div>
+                            <div class="form-options">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="terms" required>
+                                    <span class="checkmark"></span>
+                                    <span data-translate="auth.register.terms">أوافق على شروط الاستخدام وسياسة الخصوصية</span>
+                                </label>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-full" data-translate="auth.register.submit"><i class="fa fa-user-plus"></i> إنشاء الحساب</button>
+                        </form>
+                        <div class="auth-footer">
+                            <p><span data-translate="auth.register.have_account">لديك حساب بالفعل؟</span> <a href="login.html"><span data-translate="auth.register.login">تسجيل الدخول</span></a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p data-translate="footer.text">&copy; 2025 LinkScanne - نظام تحليل الروابط الذكي</p>
+        </footer>
+    </div>
+    <script src="js/config.js"></script>
+    <script>
+    // تطبيق الاتجاه فوراً حسب اللغة المحفوظة
+    (function() {
+        var savedLang = localStorage.getItem('linkScanne_language');
+        // إذا لم تكن هناك لغة محفوظة، استخدم العربية كافتراضية
+        if (!savedLang || (savedLang !== 'ar' && savedLang !== 'en')) {
+            savedLang = 'ar';
+            localStorage.setItem('linkScanne_language', 'ar');
+        }
+        // تطبيق الاتجاه حسب اللغة
+        var dir = savedLang === 'ar' ? 'rtl' : 'ltr';
+        document.documentElement.setAttribute('dir', dir);
+        document.documentElement.setAttribute('lang', savedLang);
+        if (document.body) {
+            document.body.setAttribute('dir', dir);
+            document.body.setAttribute('lang', savedLang);
+        }
+        // تطبيق CSS للاتجاه أيضاً
+        document.documentElement.style.direction = dir;
+        if (document.body) {
+            document.body.style.direction = dir;
+        }
+    })();
+    </script>
+    <script src="js/translations.js"></script>
+    <script src="js/notify.js"></script>
+    <script>
+    function toggleLanguage() {
+        var current = currentLang();
+        var newLang = current === 'ar' ? 'en' : 'ar';
+        
+        // تغيير اللغة - هذا سيحفظها في localStorage ويطبقها
+        if (typeof setLanguage === 'function') {
+            setLanguage(newLang);
+        } else {
+            // Fallback إذا لم تكن الدالة متاحة
+            currentLang = newLang;
+            localStorage.setItem('linkScanne_language', newLang);
+            if (typeof applyLanguage === 'function') {
+                applyLanguage();
+            }
+        }
+        
+        // تحديث زر اللغة فوراً
+        updateLanguageButton();
+        
+        // إعادة تطبيق الترجمة بشكل كامل
+        setTimeout(function() {
+            if (typeof applyLanguage === 'function') {
+                applyLanguage();
+            }
+            updateLanguageButton();
+        }, 100);
+    }
+    
+    function updateLanguageButton() {
+        var btn = document.getElementById('language-text');
+        if (btn) {
+            btn.textContent = translate('nav.language');
+        }
+    }
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        applyLanguage();
+        updateLanguageButton();
+    });
+    </script>
+    <script>
+    document.getElementById('register-form').addEventListener('submit', function (e) {
+        e.preventDefault();
+        var form = this;
+        if (form.dataset.authBusy === '1') {
+            return;
+        }
+        var name = document.getElementById('name').value;
+        var email = document.getElementById('email').value;
+        var password = document.getElementById('password').value;
+        var confirmPassword = document.getElementById('confirm-password').value;
+        if (password !== confirmPassword) {
+            if (typeof LinkNotify !== 'undefined') {
+                LinkNotify.show(typeof translate === 'function' ? translate('auth.notify.password_mismatch') : '', 'warning', 5000);
+            }
+            return;
+        }
+        if (password.length < 6) {
+            if (typeof LinkNotify !== 'undefined') {
+                LinkNotify.show(typeof translate === 'function' ? translate('auth.notify.password_short') : '', 'warning', 5000);
+            }
+            return;
+        }
+        form.dataset.authBusy = '1';
+        var submitBtn = form.querySelector('button[type="submit"]');
+        var txt = submitBtn.innerHTML;
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fa fa-spinner fa-spin"></i> ' + (typeof translate === 'function' ? translate('auth.register.loading') : '');
+        var API = (typeof API_BASE !== 'undefined') ? API_BASE : 'http://127.0.0.1:5000';
+        fetch(API + '/api/auth/register', { 
+            method: 'POST', 
+            headers: { 'Content-Type': 'application/json' }, 
+            credentials: 'include',
+            body: JSON.stringify({ name: name, email: email, password: password }) 
+        })
+        .then(function(r) { return r.json(); })
+        .then(function(result) {
+            if (result.user) {
+                try {
+                    localStorage.setItem('currentUser', JSON.stringify(result.user));
+                    sessionStorage.setItem('linkScanne_justLoggedIn', '1');
+                } catch (err) {}
+                if (typeof LinkNotify !== 'undefined') {
+                    LinkNotify.show(typeof translate === 'function' ? translate('auth.notify.register_ok') : '', 'success', 2200);
+                }
+                setTimeout(function () {
+                    window.location.replace('profile.html');
+                }, 650);
+            } else {
+                if (typeof LinkNotify !== 'undefined') {
+                    LinkNotify.show(result.error || (typeof translate === 'function' ? translate('auth.notify.register_fail') : ''), 'error', 5200);
+                }
+            }
+        })
+        .catch(function() {
+            if (typeof LinkNotify !== 'undefined') {
+                LinkNotify.show(typeof translate === 'function' ? translate('auth.notify.server_error') : '', 'error', 5200);
+            }
+        })
+        .finally(function() {
+            form.dataset.authBusy = '0';
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = txt;
+        });
+    });
+    </script>
+</body>
+</html>
